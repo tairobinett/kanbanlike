@@ -5,7 +5,7 @@ const Column = ({title, items}) => {
     return (
         <div className='column'>
 
-            <h3>{title}</h3>
+            <h3 className='title'>{title}</h3>
             {items.map((item, index) => (
                 <Item key={index} name={item.name} body={item.body}/>
             ))}

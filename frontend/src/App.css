@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+
+.list {
+  display:flex;
+
+}
+
+.column {
+  border:1px solid;
+  border-radius: 40px;
+  padding: 40px;
+  margin: 4px;
+}
+
+.item {
+  border: 1px solid;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 32px;
+}
