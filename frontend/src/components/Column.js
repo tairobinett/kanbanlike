@@ -5,7 +5,11 @@ const Column = ({title, items}) => {
 
     const [itemList, setItemList] = useState(items);
 
-    const helloFunction = (itemIndex) => {console.log("item index: " + itemIndex)};
+    const deleteItem = (itemIndex) => 
+    {
+        const newList = itemList.filter((_, index)=>index!==itemIndex);
+        setItemList(newList);
+    };
 
     return (
         <div className='column'>
@@ -16,7 +20,7 @@ const Column = ({title, items}) => {
                     key={index} 
                     name={item.name} 
                     body={item.body} 
-                    helloFunction={helloFunction}
+                    helloFunction={()=>deleteItem(index)} // Syntax for passing an anonymous function with an argument
                 />
             ))}
         </div>
