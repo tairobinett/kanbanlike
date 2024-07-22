@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Item from './Item';
+import Button from '@mui/material/Button';
 
 const Column = ({title, items}) => {
 
@@ -11,6 +12,14 @@ const Column = ({title, items}) => {
         setItemList(newList);
     };
 
+    const createItem = () => 
+        {
+            const name = window.prompt("Enter name:");
+            const body = window.prompt("Enter body text:");
+            const newItem = {name: name, body: body};
+            setItemList([...itemList, newItem]);
+        };
+
     return (
         <div className='column'>
 
@@ -20,9 +29,14 @@ const Column = ({title, items}) => {
                     key={index} 
                     name={item.name} 
                     body={item.body} 
-                    helloFunction={()=>deleteItem(index)} // Syntax for passing an anonymous function with an argument
+                    deleteFunction={()=>deleteItem(index)} // Syntax for passing an anonymous function with an argument
                 />
             ))}
+            <Button 
+                variant="contained" 
+                onClick={createItem}>
+                Create item
+            </Button>
         </div>
     );
 };
