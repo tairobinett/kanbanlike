@@ -1,15 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Item from './Item';
 import Button from '@mui/material/Button';
 
-const Column = ({title, items}) => {
-
-    const [itemList, setItemList] = useState(items);
+const Column = ({title, items, updateItems}) => {
 
     const deleteItem = (itemIndex) => 
     {
-        const newList = itemList.filter((_, index)=>index!==itemIndex);
-        setItemList(newList);
+        updateItems(items.filter((_, index)=>index!==itemIndex));
     };
 
     const createItem = () => 
@@ -17,14 +14,14 @@ const Column = ({title, items}) => {
             const name = window.prompt("Enter name:");
             const body = window.prompt("Enter body text:");
             const newItem = {name: name, body: body};
-            setItemList([...itemList, newItem]);
+            updateItems([...items, newItem]);
         };
 
     return (
         <div className='column'>
 
             <h3 className='title'>{title}</h3>
-            {itemList.map((item, index) => (
+            {items.map((item, index) => (
                 <Item 
                     key={index} 
                     name={item.name} 

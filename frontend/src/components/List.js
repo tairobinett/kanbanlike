@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Column from './Column';
+import Button from '@mui/material/Button';
 
 const List = () => {
 
     const [columns, setColumns] = useState([
         {
+            id: 1,
             title:'title1', 
             items:[
                 {name:'item1', body:'aaaa help'},
@@ -13,6 +15,7 @@ const List = () => {
             ]
         },
         {
+            id: 2,
             title:'title2', 
             items:[
                 {name:'item4', body:'aaaa help'},
@@ -21,6 +24,7 @@ const List = () => {
             ]
         },
         {
+            id: 3,
             title:'title3', 
             items:[
                 {name:'item7', body:'aaaa help'},
@@ -30,11 +34,37 @@ const List = () => {
         },
     ]);
 
+    const deleteColumn = (id) => 
+    {
+        setColumns(columns.filter(column=>column.id!==id));
+    };
+
+    const updateItems = (columnId, newItems) =>
+    {
+        setColumns(
+            columns.map(
+                column=>column.id===columnId ? {...column, items: newItems} : column
+            )
+        );
+    }
+
     return (
         <div className='list'>
 
             {columns.map((column, index) => (
-                <Column key={index} title={column.title} items={column.items}/>
+                <div>
+                    <Column 
+                        key={index} 
+                        title={column.title} 
+                        items={column.items}
+                        updateItems={(newItems)=>updateItems(column.id, newItems)}
+                    />
+                    <Button 
+                        variant="contained" 
+                        onClick={()=>deleteColumn(column.id)}>
+                        delete column
+                    </Button>
+                </div>
             ))}
         </div>
     );
