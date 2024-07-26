@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/mydb
+    ports:
+      - "5000:5000"
