@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Column from './Column';
 import Button from '@mui/material/Button';
 import {v4 as uuidv4} from 'uuid';
-import axios from 'axios'
 
 const List = () => {
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:5000/hello')
+            .then(response => response.json())
+            .then(data => setData(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
+    console.log("data: " + data);
+    console.log("data.message: " + data.message);
 
     const helloFunction = async () => {
         console.log("helloFunction call");
         try{
-          const response = await axios({
-            method: 'get',
-            url: 'http://127.0.0.1:5000/hello',
-          });
-          console.log(response);
+
         }catch(error){
           console.log("There was an error" + error);
         }
@@ -105,7 +112,7 @@ const List = () => {
                 className='create-column-button'
                 variant="contained" 
                 onClick={()=>helloFunction()}>
-                hello
+                
             </Button>
         </div>
     );
