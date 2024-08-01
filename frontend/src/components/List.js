@@ -8,7 +8,7 @@ const List = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5000/hello')
+        fetch('http://127.0.0.1:5000/create_table', {method: "POST"})
             .then(response => response.json())
             .then(data => setData(data))
             .catch(error => console.error('Error fetching data:', error));
@@ -24,7 +24,7 @@ const List = () => {
         }catch(error){
           console.log("There was an error" + error);
         }
-      }
+    }
 
     const uuid1 = uuidv4();
     const uuid2 = uuidv4();
@@ -112,7 +112,7 @@ const List = () => {
                 className='create-column-button'
                 variant="contained" 
                 onClick={()=>helloFunction()}>
-                
+                button name {data.message}
             </Button>
         </div>
     );

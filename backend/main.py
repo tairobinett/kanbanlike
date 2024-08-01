@@ -1,5 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
+import psycopg2
+import time
 
 app = FastAPI()
 app.add_middleware(
@@ -13,4 +15,38 @@ app.add_middleware(
 async def root():
     return {
         "message": "Hello world!"
+    }
+
+@app.post("/create_table", status_code=status.HTTP_200_OK)
+def create_table(): 
+    tableName = 'boards'
+    # tableName = request.args.get('tableName')
+    # Retry connection to ensure DB is up
+    print("start function")
+    while True:
+        try:
+            connection = psycopg2.connect(
+                dbname='mydb',
+                user='postgres',
+                password='Password1',
+                host='db',
+                port='5432'
+            )
+            break
+        except psycopg2.OperationalError:
+            print("Database not ready, retrying in 5 seconds...")
+            time.sleep(5)
+
+    cursor = connection.cursor()
+
+    sql = f'''CREATE TABLE IF NOT EXISTS {tableName}(
+        id SERIAL PRIMARY KEY,
+        board JSON
+    );'''
+
+    cursor.execute(sql)
+
+    connection.commit()
+    return {
+        "message": "create table success"
     }
