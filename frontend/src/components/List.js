@@ -14,17 +14,15 @@ const List = () => {
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
+    const saveFunction = () => {
+        fetch('http://127.0.0.1:5000/save_table', {method: "POST"})
+            .then(response => response.json())
+            .then(data => setData(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }
+
     console.log("data: " + data);
     console.log("data.message: " + data.message);
-
-    const helloFunction = async () => {
-        console.log("helloFunction call");
-        try{
-
-        }catch(error){
-          console.log("There was an error" + error);
-        }
-    }
 
     const uuid1 = uuidv4();
     const uuid2 = uuidv4();
@@ -111,8 +109,8 @@ const List = () => {
             <Button 
                 className='create-column-button'
                 variant="contained" 
-                onClick={()=>helloFunction()}>
-                button name {data.message}
+                onClick={()=>saveFunction()}>
+                save
             </Button>
         </div>
     );

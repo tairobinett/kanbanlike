@@ -50,3 +50,34 @@ def create_table():
     return {
         "message": "create table success"
     }
+
+@app.post("/save_table", status_code=status.HTTP_200_OK)
+def save_table(): 
+    testData = {"name":"fredd"}
+    # tableName = request.args.get('tableName')
+    # Retry connection to ensure DB is up
+    print("start function")
+    while True:
+        try:
+            connection = psycopg2.connect(
+                dbname='mydb',
+                user='postgres',
+                password='Password1',
+                host='db',
+                port='5432'
+            )
+            break
+        except psycopg2.OperationalError:
+            print("Database not ready, retrying in 5 seconds...")
+            time.sleep(5)
+
+    cursor = connection.cursor()
+
+    sql = '''INSERT INTO boards (board) VALUES ('{"name":"fredd"}');'''
+
+    cursor.execute(sql)
+
+    connection.commit()
+    return {
+        "message": "save table success"
+    }
