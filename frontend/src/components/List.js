@@ -5,25 +5,6 @@ import {v4 as uuidv4} from 'uuid';
 
 const List = () => {
 
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        fetch('http://127.0.0.1:5000/create_table', {method: "POST"})
-            .then(response => response.json())
-            .then(data => setData(data))
-            .catch(error => console.error('Error fetching data:', error));
-    }, []);
-
-    const saveFunction = () => {
-        fetch('http://127.0.0.1:5000/save_table', {method: "POST"})
-            .then(response => response.json())
-            .then(data => setData(data))
-            .catch(error => console.error('Error fetching data:', error));
-    }
-
-    console.log("data: " + data);
-    console.log("data.message: " + data.message);
-
     const uuid1 = uuidv4();
     const uuid2 = uuidv4();
     const uuid3 = uuidv4();
@@ -57,6 +38,34 @@ const List = () => {
             ]
         },
     ]);
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:5000/create_table', {method: "POST"})
+            .then(response => response.json())
+            .then(data => setData(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
+    const saveFunction = () => {
+        fetch('http://127.0.0.1:5000/save_table', 
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "data": "hello world"
+                })
+            })
+            .then(response => response.json())
+            .then(data => setData(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }
+
+    console.log("data: " + data);
+    console.log("data.message: " + data.message);
 
     const createColumn = () =>
         {

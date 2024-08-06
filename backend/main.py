@@ -2,6 +2,7 @@ from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 import time
+from pydantic import BaseModel
 
 app = FastAPI()
 app.add_middleware(
@@ -10,6 +11,9 @@ app.add_middleware(
     allow_credentials = True, 
     allow_methods = ["*"], 
     allow_headers = ["*"])
+
+class Request(BaseModel):
+    data: str
 
 @app.get("/hello")
 async def root():
@@ -52,8 +56,10 @@ def create_table():
     }
 
 @app.post("/save_table", status_code=status.HTTP_200_OK)
-def save_table(): 
-    testData = {"name":"fredd"}
+def save_table(args: Request): 
+    testArgs = args.data
+    print(testArgs)
+    testData = '{"name":"fredd"}'
     # tableName = request.args.get('tableName')
     # Retry connection to ensure DB is up
     print("start function")
@@ -73,7 +79,7 @@ def save_table():
 
     cursor = connection.cursor()
 
-    sql = '''INSERT INTO boards (board) VALUES ('{"name":"fredd"}');'''
+    sql = f'''INSERT INTO boards (board) VALUES ('{testData}');'''
 
     cursor.execute(sql)
 
