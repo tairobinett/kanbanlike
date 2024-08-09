@@ -74,11 +74,7 @@ const List = () => {
             .then(result => {
                 console.log("Received result:", result);
                 if (result.data) {
-                    const parsedData = JSON.parse(result.data);
-                    setColumns(parsedData);
-                    console.log("Loaded columns:", parsedData);
-                } else {
-                    console.log("No data loaded:", result.message);
+                    setColumns(result.data[0]);
                 }
             })
             .catch(error => console.error('Error loading data:', error));

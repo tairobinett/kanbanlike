@@ -131,7 +131,7 @@ def load_table():
             # The data is already a JSON string, so we don't need to use json.loads here
             board_data = result[0]
             return {
-                "data": board_data,
+                "data": result,
                 "message": "Data loaded successfully"
             }
         else:
