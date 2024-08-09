@@ -49,19 +49,39 @@ const List = () => {
     }, []);
 
     const saveFunction = () => {
-        fetch('http://127.0.0.1:5000/save_table', 
+        const dataToSave = JSON.stringify(columns);
+        fetch('http://127.0.0.1:5000/save_table',
             {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "data": "hello world"
+                    data: dataToSave  // This is already a JSON string, so we don't need to stringify it again
                 })
             })
             .then(response => response.json())
-            .then(data => setData(data))
-            .catch(error => console.error('Error fetching data:', error));
+            .then(data => {
+                setData(data);
+                console.log("Save response:", data);
+            })
+            .catch(error => console.error('Error saving data:', error));
+    }
+
+    const loadFunction = () => {
+        fetch('http://127.0.0.1:5000/load_table')
+            .then(response => response.json())
+            .then(result => {
+                console.log("Received result:", result);
+                if (result.data) {
+                    const parsedData = JSON.parse(result.data);
+                    setColumns(parsedData);
+                    console.log("Loaded columns:", parsedData);
+                } else {
+                    console.log("No data loaded:", result.message);
+                }
+            })
+            .catch(error => console.error('Error loading data:', error));
     }
 
     console.log("data: " + data);
@@ -120,6 +140,12 @@ const List = () => {
                 variant="contained" 
                 onClick={()=>saveFunction()}>
                 save
+            </Button>
+            <Button 
+                className='create-column-button'
+                variant="contained" 
+                onClick={()=>loadFunction()}>
+                load
             </Button>
         </div>
     );
