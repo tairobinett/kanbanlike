@@ -33,12 +33,9 @@ const List = () => {
         },
     ]);
 
-    const [data, setData] = useState([]);
-
     useEffect(() => {
         fetch('http://127.0.0.1:5000/create_table', {method: "POST"})
             .then(response => response.json())
-            .then(data => setData(data))
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
@@ -55,10 +52,6 @@ const List = () => {
                 })
             })
             .then(response => response.json())
-            .then(data => {
-                setData(data);
-                console.log("Save response:", data);
-            })
             .catch(error => console.error('Error saving data:', error));
     }
 
@@ -66,16 +59,12 @@ const List = () => {
         fetch('http://127.0.0.1:5000/load_table')
             .then(response => response.json())
             .then(result => {
-                console.log("Received result:", result);
                 if (result.data) {
                     setColumns(result.data[0]);
                 }
             })
             .catch(error => console.error('Error loading data:', error));
     }
-
-    console.log("data: " + data);
-    console.log("data.message: " + data.message);
 
     const createColumn = () =>
         {

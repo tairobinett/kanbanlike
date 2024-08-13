@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 import time
 from pydantic import BaseModel
-import json
 
 app = FastAPI()
 app.add_middleware(
@@ -129,7 +128,6 @@ def load_table():
         
         if result:
             # The data is already a JSON string, so we don't need to use json.loads here
-            board_data = result[0]
             return {
                 "data": result,
                 "message": "Data loaded successfully"
