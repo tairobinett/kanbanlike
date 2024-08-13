@@ -12,29 +12,23 @@ const List = () => {
     const [columns, setColumns] = useState([
         {
             id: uuid1,
-            title:'title1', 
+            title:'TODO', 
             items:[
-                {name:'item1', body:'aaaa help'},
-                {name:'item2', body:'aaaa help'},
-                {name:'item3', body:'aaaa help'},
+                {name:'Dishes', body:'Clean the dishes in the sink'},
             ]
         },
         {
             id: uuid2,
-            title:'title2', 
+            title:'IN PROGRESS', 
             items:[
-                {name:'item4', body:'aaaa help'},
-                {name:'item5', body:'aaaa help'},
-                {name:'item6', body:'aaaa help'},
+                {name:'Laundry', body:'Take laundry from wash and put it in the dryer'},
             ]
         },
         {
             id: uuid3,
-            title:'title3', 
+            title:'DONE', 
             items:[
-                {name:'item7', body:'aaaa help'},
-                {name:'item8', body:'aaaa help'},
-                {name:'item9', body:'aaaa help'},
+                {name:'Garbage', body:'Take out trash and recycling'},
             ]
         },
     ]);
